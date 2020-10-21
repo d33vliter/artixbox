@@ -1,0 +1,49 @@
+#!/bin/bash
+##d33vliter
+
+i="sudo pacman -S --noconfirm"
+ii="trizen -S --noconfirm"
+
+##paquetes para compilar
+	$i linux-headers-$(uname -r) linux-headers-$(uname -r) git 
+
+##programas base
+	$i xorg-server xorg-xinit nitrogen tint2 geany neofetch slim slim-runit sakura volumeicon alsa-utils trizen\
+	ntp yad elogind viewnior xdg-user-dirs exo at-spi2-core thunar thunar-archive-plugin polkit-gnome
+
+##paquetes basicos para entorno 
+	$i firefox mpv lxappearance-gtk3 gtk-engine-murrine xfce4-notifyd libnotify xfconf xfce4-power-manager
+
+##openbox
+	$i openbox obconf lxmenu-data arandr xarchiver p7zip connman connman-runit connman-gtk yad
+	$ii obmenu
+
+##openbox-menu
+	sudo pacman -U cfg/openbox-menu.pkg.tar.zst
+
+clear
+echo "Aplicando configuraciones..."
+sleep 2s
+
+##config
+xdg-user-dirs-update
+mkdir -p $HOME/.config/openbox
+mkdir -p $HOME/.config/tint2
+echo -e "nitrogen --restore &
+\ntint2 &
+\nconnman-gtk &
+\nvolumeicon &
+\n/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &" > $HOME/.config/openbox/autostart.sh
+cp -r cfg/menu.xml $HOME/.config/openbox/
+cp -r tint2/tint2rc $HOME/.config/tint2/
+cp -r tint2/minimo.tint2rc $HOME/.config/tint2/
+cp -r cfg/.themes $HOME/
+sudo cp -r cfg/exit /usr/bin/
+sudo cp -r cfg/slim/default /usr/share/slim/themes/
+echo -e "exec dbus-launch --sh-syntax --exit-with-session openbox-session" > $HOME/.xinitrc
+####
+clear
+echo "Instalación completada"
+echo "pulse cualquiera tecla para continuar..."
+read tecla
+clear

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+while :
+do
+clear
+echo "Devuanbox Installer"
+echo "-----------------------"
+echo "1. Devuanbox"
+echo
+echo "2. Devuanbox Laptop"
+echo
+echo "3. Salir"
+echo "-----------------------"
+echo "Selecciona una opcion: "
+read opcion
+case $opcion in
+
+1)clear && chmod +x devuanbox && ./devuanbox;;
+
+2)clear &&  chmod +x devuanbox-laptop && ./devuanbox-laptop;;
+
+3)clear;
+exit 1;;
+esac
+done
